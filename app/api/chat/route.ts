@@ -64,7 +64,31 @@ Always reference the original report data when relevant and help the user dig de
 
     const message = completion.choices[0]?.message?.content || "I apologize, but I couldn't generate a response. Could you please rephrase your question?";
 
-    return NextResponse.json({ message });
+    // Log token usage
+    const tokenUsage = completion.usage;
+    if (tokenUsage) {
+      const costEstimate = (tokenUsage.total_tokens / 1000) * 0.03; // GPT-4 pricing
+      console.log("� Chat Message Token Usage:", {
+        prompt_tokens: tokenUsage.prompt_tokens,
+        completion_tokens: tokenUsage.completion_tokens,
+        total_tokens: tokenUsage.total_tokens,
+        estimated_cost: `$${costEstimate.toFixed(4)}`,
+        model: "gpt-4",
+        messages_in_conversation: messages.length + 1, // +1 for the system message
+        timestamp: new Date().toISOString(),
+        user_message_length: messages[messages.length - 1]?.content?.length || 0,
+        ai_response_length: message.length
+      });
+    }
+
+    return NextResponse.json({ 
+      message,
+      tokenUsage: tokenUsage ? {
+        prompt_tokens: tokenUsage.prompt_tokens,
+        completion_tokens: tokenUsage.completion_tokens,
+        total_tokens: tokenUsage.total_tokens
+      } : null
+    });
   } catch (error) {
     console.error("Error in chat:", error);
     return NextResponse.json(

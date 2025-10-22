@@ -34,12 +34,6 @@ export default function Header() {
               AI Analyzer
             </Link>
             <Link 
-              href="#about" 
-              className="text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-            >
-              About
-            </Link>
-            <Link 
               href="#contact" 
               className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
             >

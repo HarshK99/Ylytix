@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Send, MessageCircle, FileText, Brain } from "lucide-react";
 import ChatInterface from "./components/ChatInterface";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 interface Message {
   role: "user" | "assistant";
@@ -36,6 +39,11 @@ export default function ToolPage() {
       }
 
       const result = await response.json();
+      
+      // Log token usage (server-side logging only)
+      if (result.tokenUsage) {
+        console.log("📊 Report Analysis Token Usage:", result.tokenUsage);
+      }
       
       // Initialize chat with AI's initial questions
       const initialMessage: Message = {
@@ -81,6 +89,11 @@ export default function ToolPage() {
 
       const result = await response.json();
       
+      // Log token usage (server-side logging only)
+      if (result.tokenUsage) {
+        console.log("💬 Chat Message Token Usage:", result.tokenUsage);
+      }
+      
       const aiMessage: Message = {
         role: "assistant",
         content: result.message,
@@ -107,9 +120,12 @@ export default function ToolPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <Header />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
+         
+
+          {/* Page Header */}
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-3 mb-4">
               <Brain className="w-8 h-8 text-indigo-600" />
@@ -181,16 +197,23 @@ export default function ToolPage() {
                       AI Insights Chat
                     </h2>
                   </div>
-                  <button
-                    onClick={resetTool}
-                    className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                  >
-                    New Analysis
-                  </button>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={resetTool}
+                      className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+                    >
+                      New Analysis
+                    </button>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                  Explore your data through AI-powered questions and insights
-                </p>
+                <div className="flex items-center justify-between mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    Explore your data through AI-powered questions and insights
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Model: GPT-4
+                  </p>
+                </div>
               </div>
               
               <ChatInterface

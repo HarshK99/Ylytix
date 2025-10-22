@@ -56,7 +56,30 @@ Please provide your initial analysis and follow-up questions:`;
 
     const initialQuestions = completion.choices[0]?.message?.content || "I'd be happy to help analyze your report data. Could you tell me more about the specific metrics or areas you'd like to focus on?";
 
-    return NextResponse.json({ initialQuestions });
+    // Log token usage
+    const tokenUsage = completion.usage;
+    if (tokenUsage) {
+      const costEstimate = (tokenUsage.total_tokens / 1000) * 0.03; // GPT-4 pricing
+      console.log("📊 Report Analysis Token Usage:", {
+        prompt_tokens: tokenUsage.prompt_tokens,
+        completion_tokens: tokenUsage.completion_tokens,
+        total_tokens: tokenUsage.total_tokens,
+        estimated_cost: `$${costEstimate.toFixed(4)}`,
+        model: "gpt-4",
+        report_data_length: reportData.length,
+        response_length: initialQuestions.length,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    return NextResponse.json({ 
+      initialQuestions,
+      tokenUsage: tokenUsage ? {
+        prompt_tokens: tokenUsage.prompt_tokens,
+        completion_tokens: tokenUsage.completion_tokens,
+        total_tokens: tokenUsage.total_tokens
+      } : null
+    });
   } catch (error) {
     console.error("Error analyzing report:", error);
     return NextResponse.json(

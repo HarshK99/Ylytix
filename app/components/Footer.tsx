@@ -16,29 +16,7 @@ export default function Footer() {
               Transform your data into actionable insights with AI-powered analysis. 
               Stop just reporting, start insighting.
             </p>
-            <div className="flex gap-4">
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-indigo-400 transition-colors"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-            </div>
+            
           </div>
 
           {/* Quick Links */}
@@ -81,12 +59,8 @@ export default function Footer() {
                 <span className="text-sm">hello@ylytix.com</span>
               </div>
               <div className="flex items-center gap-2 text-gray-400">
-                <Phone className="w-4 h-4" />
-                <span className="text-sm">+1 (555) 123-4567</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-400">
                 <MapPin className="w-4 h-4" />
-                <span className="text-sm">San Francisco, CA</span>
+                <span className="text-sm">Gurugram, India</span>
               </div>
             </div>
           </div>
@@ -97,20 +71,6 @@ export default function Footer() {
           <p className="text-gray-400 text-sm">
             © 2025 Ylytix. All rights reserved.
           </p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link 
-              href="#" 
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Privacy Policy
-            </Link>
-            <Link 
-              href="#" 
-              className="text-gray-400 hover:text-white transition-colors text-sm"
-            >
-              Terms of Service
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
